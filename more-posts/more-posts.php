@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WordCamp BH - Plugin More Posts
- * Plugin URI: https://github.com/WordPressBeloHorizonte/hackathon-exemplos
+ * Plugin URI: https://github.com/lucasmiranda5/more-posts-plugin
  * Description: Este plugin permite você utilizar um widget com o Posts relacionados de qualquer post type em single ou archive.
  * Author: Lucas Miranda
  * Author URI: http://lucasmiranda.com.br/
