@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: WordCamp BH - Plugin More Posts
+ * Plugin Name: More Post
  * Plugin URI: https://github.com/lucasmiranda5/more-posts-plugin
  * Description: Este plugin permite você utilizar um widget com o Posts relacionados de qualquer post type em single ou archive.
  * Author: Lucas Miranda
@@ -15,22 +15,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-if ( ! class_exists( 'WC_moreposts_Wordcamp_BH' ) ) :
+if ( ! class_exists( 'WC_moreposts' ) ) :
 
-/**
- * Facebook likebox widget.
- *
- * Baseado em https://codex.wordpress.org/Widgets_API
- */
-class WC_moreposts_Wordcamp_BH extends WP_Widget {
+class WC_moreposts extends WP_Widget {
 
 	/**
 	 * Registra o widget no WordPress WordPress.
 	 */
 	public function __construct() {
 		parent::__construct(
-			'wc_moreposts_wordcamp_bh',
-			__( 'More Posts Wordcamp', 'more-posts' ),
+			'wc_moreposts',
+			__( 'More Posts', 'more-posts' ),
 			array( 'description' => __( 'This widget includes more post in your blog', 'more-posts' ), )
 		);
 	}
@@ -47,8 +42,7 @@ class WC_moreposts_Wordcamp_BH extends WP_Widget {
 	public function form( $instance ) {
 		$prefixo         = isset( $instance['prefixo'] ) ? $instance['prefixo'] : '';
 		$conteudo_atual         = isset( $instance['conteudo_atual'] ) ? $instance['conteudo_atual'] : '';
-		$titulo         = isset( $instance['titulo'] ) ? $instance['titulo'] : '';
-		
+		$titulo         = isset( $instance['titulo'] ) ? $instance['titulo'] : '';		
 
 		?>
 		<p>
@@ -133,14 +127,13 @@ class WC_moreposts_Wordcamp_BH extends WP_Widget {
 							$x = 1;
 							foreach($query as $post){
 								if($x == 1)
-									print '<div class="row">';
-								print "<div class='col-md-12 '>";
+									
 								print "<a href='".get_permalink($post->ID)."' title='".$post->post_title."'>";
 								
 								if ( get_the_post_thumbnail($post->ID) ) { 
 									$img = get_the_post_thumbnail($post->ID,'miniaturas');
 								}else{
-									$img = '<img src="'.get_template_directory_uri().'/assets/images/sem-foto.png" title="'.$post->post_title.'" alt="'.$post->post_title.'">';
+									$img = '<img src="'.plugin_dir_url( __FILE__ ).'imagens/sem-foto.png" title="'.$post->post_title.'" alt="'.$post->post_title.'">';
 								}
 								
 								if( $instance['titulo'] == 't') 
@@ -150,9 +143,9 @@ class WC_moreposts_Wordcamp_BH extends WP_Widget {
 								else
 									print $img.'<p align="center">'.$post->post_title.'</p>'."<hr>";
 								print '</a>';
-								print '</div>';
+								
 								if($x == 4){
-									print "</div>";
+									
 									$x = 1;
 								}else
 									$x++;
@@ -178,21 +171,21 @@ class WC_moreposts_Wordcamp_BH extends WP_Widget {
 /**
  * Registra o Widget no WordPress.
  */
-function wc_bh_morepost_widget_register() {
-	register_widget( 'WC_moreposts_Wordcamp_BH' );
+function wc_morepost_widget_register() {
+	register_widget( 'WC_moreposts' );
 }
 
-add_action( 'widgets_init', 'wc_bh_morepost_widget_register' );
+add_action( 'widgets_init', 'wc_morepost_widget_register' );
 
 /**
  * Carrega o textdomain do plugin.
  *
  * Documentação: https://codex.wordpress.org/Function_Reference/load_plugin_textdomain
  */ 
-function wc_bh_morepost_widget_load_textdomain() {
+function wc_morepost_widget_load_textdomain() {
 	load_plugin_textdomain( 'more-posts', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 }
 
-add_action( 'plugins_loaded', 'wc_bh_morepost_widget_load_textdomain' );
+add_action( 'plugins_loaded', 'wc_morepost_widget_load_textdomain' );
 
 endif;
